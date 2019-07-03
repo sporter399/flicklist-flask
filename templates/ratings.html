@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Movies I Have Watched</h2>
+
+<ul>    
+        
+        {% for movie in ratelist: %}
+        <li>
+            <form action="/rating-confirmation" method="post">
+                {{ movie }}
+               <!----<input type="hidden" name="crossed-off-movie" value="{{ movie }}"/>-->
+               <button class="dropbutton">Rate It!</button>
+               <select>
+                    <option value="rate it">How was it?</option>
+                    <option value="*">*</option>
+                    <option value="**">**</option>
+                    <option value="***">***</option>
+                    <option value="****">****</option>
+                </select>
+                
+            </form> 
+        </li>
+        {% endfor %}
+      </ul>
+
+  
+
+
+  </div>
+
+
+{% endblock %}
