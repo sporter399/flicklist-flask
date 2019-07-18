@@ -1,10 +1,12 @@
 from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
 import cgi
-
+import os
 app = Flask(__name__)
 app.config['DEBUG'] = True      # displays runtime errors in the browser, too
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://flicklist:MyNewPass@localhost:8889/flicklist'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://flicklist:MyNewPass@localhost:8889/flicklist'
+project_dir = os.path.dirname(os.path.abspath(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///{}".format(os.path.join(project_dir, "flicklist.db"))
 app.config['SQLALCHEMY_ECHO'] = True
 
 db = SQLAlchemy(app)
@@ -44,10 +46,10 @@ terrible_movies = [
 ]
 
 def get_current_watchlist():
-    return Movie.query.filter_by(watched=False).all()
+    return [movie.name for movie in Movie.query.all()]
 
 def get_watched_movies():
-    return Movie.query.filter_by(watched=True).all()
+    return Movie.query.all()
 
 # TODO 3: Add "/login" GET and POST routes.
 # TODO 4: Create login template with username and password.
